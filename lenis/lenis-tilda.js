@@ -1,7 +1,18 @@
 const lenis = new Lenis({
   lerp: window.TILDA_LENIS_CONFIG?.lerp || 0.1,
   smoothWheel: window.TILDA_LENIS_CONFIG?.smoothWheel ?? true,
-  infinite: window.TILDA_LENIS_CONFIG?.infinite ?? false
+  infinite: window.TILDA_LENIS_CONFIG?.infinite ?? false,
+
+  prevent: (node) => {
+    return (
+      node.closest('.t-popup') ||
+      node.closest('.t706__cartwin') ||
+      node.closest('.t706__cartwin-content') ||
+      node.closest('.t-menu__mobile') ||
+      node.closest('iframe') ||
+      node.closest('.uc-prevent')
+    );
+  }
 });
 
 function raf(time) {
@@ -10,18 +21,3 @@ function raf(time) {
 }
 
 requestAnimationFrame(raf);
-
-const preventSelectors =
-  window.TILDA_LENIS_CONFIG?.preventSelectors || [];
-
-document.addEventListener(
-  'wheel',
-  (e) => {
-    for (const selector of preventSelectors) {
-      if (e.target.closest(selector)) {
-        return;
-      }
-    }
-  },
-  { passive: true }
-);
