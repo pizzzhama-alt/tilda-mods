@@ -13,179 +13,92 @@ Zero Block Slider Carousel для Tilda
 * автоматическую высоту под активный слайд;
 * собственные SVG-иконки стрелок.
 
+Важные условия
+На странице должно быть минимум два Zero Block.
+У каждого слайда должен быть класс zslider-slide.
+Настройки должны находиться перед подключением JavaScript.
+Не подключайте slider-carousel.js дважды.
+После изменения блоков опубликуйте страницу заново.
+Модификация не использует Swiper, jQuery и другие сторонние библиотеки.
 
 
-1. Подключите модификацию
 
-В Tilda откройте:
+1. Подключение CSS
+Добавьте на страницу блок T123 «HTML-код» и разместите его перед слайдами.
+Вставьте:
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/pizzzhama-alt/tilda-mods@main/slider-carousel/slider-carousel.css">
+CSS подключается один раз.
 
-Настройки сайта → Ещё → HTML-код для вставки внутрь HEAD
 
-Добавьте:
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/pizzzhama-alt/tilda-mods@main/slider-carousel/slider-carousel.css">
-<script defer src="https://cdn.jsdelivr.net/gh/pizzzhama-alt/tilda-mods@main/slider-carousel/slider-carousel.js"></script>
-
-Сохраните изменения.
-
-⸻
-
-2. Создайте слайды
-
-1. Добавьте на страницу минимум два Zero Block.
-2. Каждый Zero Block будет отдельным слайдом.
-3. В настройках каждого Zero Block укажите дополнительный CSS-класс:
-
-zslider-slide
-
-Важно: класс нужно назначать именно самому Zero Block, а не элементу внутри него.
-
-Слайды будут идти в том порядке, в котором расположены на странице.
-
-⸻
-
-3. Добавьте настройки слайдера на страницу
-
-Откройте:
-
-Настройки страницы → Дополнительный HTML-код → Перед </body>
-
-Вставьте код:
+2. Настройки и подключение JavaScript
+Добавьте ещё один блок T123 «HTML-код» после блока с CSS, но перед Zero Block со слайдами.
+Вставьте:
 
 <script>
 window.ZBSliderConfig = {
-  /* Расположение полосок:
-     top — сверху
-     bottom — снизу
-     start — слева
-     end — справа */
-  dotPlacement: 'top',
+  /* Расположение пагинации:
+     top — сверху;
+     bottom — снизу;
+     start — слева;
+     end — справа. */
+  dotPlacement: 'bottom',
+
   /* Показывать стрелки */
   arrows: true,
+
   /* Бесконечное листание */
   loop: true,
+
   /* Стартовый слайд:
-     0 — первый, 1 — второй, 2 — третий */
+     0 — первый;
+     1 — второй;
+     2 — третий. */
   startSlide: 0,
-  /* Автопрокрутка */
+
+  /* Автоматическое пролистывание */
   autoplay: true,
-  /* Время показа одного слайда в миллисекундах:
-     5000 = 5 секунд */
-  autoplayDelay: 5000,
-  /* Иконка стрелки назад */
+
+  /* Задержка в миллисекундах:
+     5000 = 5 секунд;
+     8000 = 8 секунд. */
+  autoplayDelay: 8000,
+
+  /* Иконка «Назад» */
   prevArrowHTML:
     '<img src="https://raw.githubusercontent.com/pizzzhama-alt/tilda-assets/refs/heads/main/arrow-prev.svg" alt="Предыдущий слайд">',
-  /* Иконка стрелки вперёд */
+
+  /* Иконка «Вперёд» */
   nextArrowHTML:
     '<img src="https://raw.githubusercontent.com/pizzzhama-alt/tilda-assets/refs/heads/main/arrow-next.svg" alt="Следующий слайд">'
 };
 </script>
 
-Сохраните и опубликуйте страницу.
+<script src="https://cdn.jsdelivr.net/gh/pizzzhama-alt/tilda-mods@main/slider-carousel/slider-carousel.js"></script>
 
-⸻
 
-4. Что можно менять в Tilda
+Важно: объект window.ZBSliderConfig должен находиться перед подключением slider-carousel.js.
 
-Все настройки выше можно менять прямо в коде страницы.
+3. Расположение блоков на странице
+Блоки должны располагаться в таком порядке:
+1. T123 с подключением CSS
+2. T123 с настройками и подключением JavaScript
+3. Первый Zero Block с классом zslider-slide
+4. Второй Zero Block с классом zslider-slide
+5. Остальные слайды
+После изменений опубликуйте страницу.
 
-Расположение пагинации
-
-dotPlacement: 'top',
-
-Доступные значения:
-
-'top'    // сверху
-'bottom' // снизу
-'start'  // слева
-'end'    // справа
-
-Стрелки
-
-arrows: true,
-true  // показать стрелки
-false // скрыть стрелки
-
-Автопрокрутка
-
-autoplay: true,
-autoplayDelay: 5000,
-
-Примеры задержки:
-
-3000  // 3 секунды
-5000  // 5 секунд
-8000  // 8 секунд
-
-Бесконечное листание
-
-loop: true,
-true  // после последнего слайда открывается первый
-false // на первом и последнем слайде листание останавливается
-
-Стартовый слайд
-
-startSlide: 0,
-0 // первый слайд
-1 // второй слайд
-2 // третий слайд
-
-⸻
-
-5. Как заменить иконки стрелок
-
-Замените ссылки внутри prevArrowHTML и nextArrowHTML.
-
-Пример:
-
-prevArrowHTML:
-  '<img src="https://site.ru/arrow-prev.svg" alt="Предыдущий слайд">',
-nextArrowHTML:
-  '<img src="https://site.ru/arrow-next.svg" alt="Следующий слайд">'
-
-Подойдут SVG, PNG, WebP и другие изображения по прямой ссылке.
-
-⸻
-
-6. Как изменить внешний вид
-
-Внешний вид изменяется в файле:
-
-slider-carousel.css
-
-Там можно настроить:
-
-* размер и расположение стрелок;
-* цвет и размер полосок;
-* длину активной полоски;
-* отступы пагинации;
-* скорость анимации;
-* стили для мобильной версии.
-
-Например, длина активной полоски:
-
-.zb-slider__dot.is-active {
-  width: 42px;
+4. Обновление файлов через @main
+   
+После изменения JavaScript на GitHub откройте:
+https://purge.jsdelivr.net/gh/pizzzhama-alt/tilda-mods@main/slider-carousel/slider-carousel.js
+После изменения CSS:
+https://purge.jsdelivr.net/gh/pizzzhama-alt/tilda-mods@main/slider-carousel/slider-carousel.css
+Успешная очистка кэша:
+{
+  "status": "finished"
 }
+После очистки заново опубликуйте страницу Tilda и обновите её без кэша:
+macOS: Command + Shift + R;
+Windows: Ctrl + F5.
 
-Цвет заполнения прогресса:
-
-.zb-slider__dot-progress {
-  background: #ffffff;
-}
-
-⸻
-
-7. Важные условия
-
-* На странице должно быть минимум два Zero Block с классом zslider-slide.
-* Код с window.ZBSliderConfig должен находиться на странице, где используется слайдер.
-* Стили и JavaScript подключаются один раз через настройки сайта.
-* Модификация не использует Swiper, jQuery и другие сторонние библиотеки.
-* После обновления файлов в GitHub обновите страницу с очисткой кэша: Ctrl + F5 на Windows или Cmd + Shift + R на Mac.
-* Для важных рабочих проектов рекомендуется использовать фиксированную версию вместо @main.
-
-Пример фиксированной версии:
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/pizzzhama-alt/tilda-mods@v1.0.0/slider-carousel/slider-carousel.css">
-<script defer src="https://cdn.jsdelivr.net/gh/pizzzhama-alt/tilda-mods@v1.0.0/slider-carousel/slider-carousel.js"></script>
