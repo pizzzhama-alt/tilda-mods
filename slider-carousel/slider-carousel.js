@@ -2,29 +2,18 @@ t_onReady(function () {
 
   /* =========================================================
      НАСТРОЙКИ
+     Должны быть заданы в Tilda перед подключением этого файла:
+     window.ZBSliderConfig = { ... }
   ========================================================= */
 
-  var defaultConfig = {
-  dotPlacement: 'top',
-  arrows: true,
-  loop: true,
-  startSlide: 0,
-  autoplay: true,
-  autoplayDelay: 5000,
+  var config = window.ZBSliderConfig;
 
-  prevArrowHTML:
-    '<img src="https://raw.githubusercontent.com/pizzzhama-alt/tilda-assets/refs/heads/main/arrow-prev.svg" alt="Предыдущий слайд" decoding="async">',
-
-  nextArrowHTML:
-    '<img src="https://raw.githubusercontent.com/pizzzhama-alt/tilda-assets/refs/heads/main/arrow-next.svg" alt="Следующий слайд" decoding="async">'
-};
-
-/* Настройки, заданные непосредственно в Tilda */
-var config = Object.assign(
-  {},
-  defaultConfig,
-  window.ZBSliderConfig || {}
-);
+  if (!config) {
+    console.warn(
+      'Zero Block Slider: не найдены настройки window.ZBSliderConfig.'
+    );
+    return;
+  }
 
   /* =========================================================
      ПОИСК СЛАЙДОВ
@@ -57,6 +46,7 @@ var config = Object.assign(
 
   var slider = document.createElement('div');
   slider.className = 'zb-slider dots-' + config.dotPlacement;
+
   slider.style.setProperty(
     '--autoplay-delay',
     config.autoplayDelay + 'ms'
@@ -126,14 +116,14 @@ var config = Object.assign(
     prevButton.className =
       'zb-slider__arrow zb-slider__arrow--prev';
     prevButton.setAttribute('aria-label', 'Предыдущий слайд');
-    prevButton.innerHTML = config.prevArrowHTML;
+    prevButton.innerHTML = config.prevArrowHTML || '';
 
     var nextButton = document.createElement('button');
     nextButton.type = 'button';
     nextButton.className =
       'zb-slider__arrow zb-slider__arrow--next';
     nextButton.setAttribute('aria-label', 'Следующий слайд');
-    nextButton.innerHTML = config.nextArrowHTML;
+    nextButton.innerHTML = config.nextArrowHTML || '';
 
     prevButton.addEventListener('click', function () {
       goToSlide(currentSlide - 1);
@@ -195,7 +185,7 @@ var config = Object.assign(
 
     if (!config.autoplay) return;
 
-    /* Перезапускаем CSS-анимацию прогресса */
+    /* Перезапуск CSS-анимации прогресса */
     void activeDot.offsetWidth;
 
     activeDot.classList.add('is-progress-running');
@@ -264,7 +254,10 @@ var config = Object.assign(
     var deltaX = event.clientX - startX;
     var deltaY = event.clientY - startY;
 
+    /* Не блокируем вертикальную прокрутку страницы */
     if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+
+    /* Минимальная длина свайпа */
     if (Math.abs(deltaX) < 45) return;
 
     if (deltaX < 0) {
@@ -314,7 +307,7 @@ var config = Object.assign(
 
   goToSlide(currentSlide);
 
-  /* Подстраховка для поздней инициализации Zero Block / шрифтов */
+  /* Подстраховка для Zero Block, изображений и шрифтов */
   setTimeout(updateSliderHeight, 500);
   setTimeout(updateSliderHeight, 1200);
 });
