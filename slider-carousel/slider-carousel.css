@@ -1,1 +1,212 @@
+<style>
+/* =========================================================
+   ZERO BLOCK SLIDER
+   Каждый Zero Block с классом zslider-slide становится слайдом
+========================================================= */
 
+.zb-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  touch-action: pan-y;
+  transition: height 0.45s ease;
+}
+
+.zb-slider__track {
+  display: flex;
+  width: 100%;
+  will-change: transform;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.zb-slider__track > .t-rec {
+  flex: 0 0 100%;
+  width: 100% !important;
+  min-width: 0;
+}
+
+/* =========================================================
+   ПАГИНАЦИЯ — ПОЛОСКИ С ПРОГРЕССОМ
+========================================================= */
+
+.zb-slider__dots {
+  position: absolute;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zb-slider__dot {
+  position: relative;
+  width: 20px;
+  height: 3px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  transition:
+    width 0.35s ease,
+    background 0.35s ease;
+}
+
+.zb-slider__dot.is-active {
+  width: 42px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.zb-slider__dot-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: #ffffff;
+}
+
+.zb-slider__dot.is-progress-running .zb-slider__dot-progress {
+  animation: zb-slider-progress var(--autoplay-delay) linear forwards;
+}
+
+@keyframes zb-slider-progress {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@media (hover: hover) {
+  .zb-slider__dot:hover {
+    background: rgba(255, 255, 255, 0.55);
+  }
+}
+
+/* =========================================================
+   РАСПОЛОЖЕНИЕ ПАГИНАЦИИ
+========================================================= */
+
+.zb-slider.dots-top .zb-slider__dots {
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.zb-slider.dots-bottom .zb-slider__dots {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.zb-slider.dots-start .zb-slider__dots {
+  top: 50%;
+  left: 20px;
+  flex-direction: column;
+  transform: translateY(-50%);
+}
+
+.zb-slider.dots-end .zb-slider__dots {
+  top: 50%;
+  right: 20px;
+  flex-direction: column;
+  transform: translateY(-50%);
+}
+
+/* =========================================================
+   СТРЕЛКИ
+========================================================= */
+
+.zb-slider__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+
+  transform: translateY(-50%);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.zb-slider__arrow:hover {
+  opacity: 0.7;
+}
+
+.zb-slider__arrow--prev {
+  left: 20px;
+}
+
+.zb-slider__arrow--next {
+  right: 20px;
+}
+
+.zb-slider__arrow img,
+.zb-slider__arrow svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* =========================================================
+   МОБИЛЬНАЯ ВЕРСИЯ
+========================================================= */
+
+@media screen and (max-width: 640px) {
+  .zb-slider__arrow {
+    width: 38px;
+    height: 38px;
+  }
+
+  .zb-slider__arrow--prev {
+    left: 12px;
+  }
+
+  .zb-slider__arrow--next {
+    right: 12px;
+  }
+
+  .zb-slider.dots-top .zb-slider__dots {
+    top: 10px;
+  }
+
+  .zb-slider.dots-bottom .zb-slider__dots {
+    bottom: 12px;
+  }
+
+  .zb-slider.dots-start .zb-slider__dots {
+    left: 12px;
+  }
+
+  .zb-slider.dots-end .zb-slider__dots {
+    right: 12px;
+  }
+
+  .zb-slider__dot {
+    width: 16px;
+    height: 3px;
+  }
+
+  .zb-slider__dot.is-active {
+    width: 32px;
+  }
+}
+</style>
