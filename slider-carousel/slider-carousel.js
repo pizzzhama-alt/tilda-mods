@@ -4,37 +4,27 @@ t_onReady(function () {
      НАСТРОЙКИ
   ========================================================= */
 
-  var config = {
+  var defaultConfig = {
+  dotPlacement: 'top',
+  arrows: true,
+  loop: true,
+  startSlide: 0,
+  autoplay: true,
+  autoplayDelay: 5000,
 
-    /* top — сверху
-       bottom — снизу
-       start — слева
-       end — справа */
-    dotPlacement: 'top',
+  prevArrowHTML:
+    '<img src="https://raw.githubusercontent.com/pizzzhama-alt/tilda-assets/refs/heads/main/arrow-prev.svg" alt="Предыдущий слайд" decoding="async">',
 
-    /* Показывать стрелки */
-    arrows: true,
+  nextArrowHTML:
+    '<img src="https://raw.githubusercontent.com/pizzzhama-alt/tilda-assets/refs/heads/main/arrow-next.svg" alt="Следующий слайд" decoding="async">'
+};
 
-    /* Бесконечное листание */
-    loop: true,
-
-    /* 0 — первый слайд, 1 — второй и т.д. */
-    startSlide: 0,
-
-    /* Автопролистывание */
-    autoplay: true,
-
-    /* Время показа слайда в миллисекундах */
-    autoplayDelay: 5000,
-
-    /* Иконка стрелки назад */
-    prevArrowHTML:
-      '<img src="https://raw.githubusercontent.com/pizzzhama-alt/tilda-assets/refs/heads/main/arrow-prev.svg" alt="Предыдущий слайд" decoding="async">',
-
-    /* Иконка стрелки вперед */
-    nextArrowHTML:
-      '<img src="https://raw.githubusercontent.com/pizzzhama-alt/tilda-assets/refs/heads/main/arrow-next.svg" alt="Следующий слайд" decoding="async">'
-  };
+/* Настройки, заданные непосредственно в Tilda */
+var config = Object.assign(
+  {},
+  defaultConfig,
+  window.ZBSliderConfig || {}
+);
 
   /* =========================================================
      ПОИСК СЛАЙДОВ
